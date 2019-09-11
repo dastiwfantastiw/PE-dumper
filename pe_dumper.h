@@ -191,9 +191,9 @@ BOOL dump(Var_type Process)
 
 	VOID* Image = malloc(pNtHeader->OptionalHeader.SizeOfImage);
 
-	VirtualAllocEx(hProcess, ModEntry.modBaseAddr, pNtHeader->OptionalHeader.SizeOfImage, PAGE_READONLY, Protection);
+	VirtualProtectEx(hProcess, ModEntry.modBaseAddr, pNtHeader->OptionalHeader.SizeOfImage, PAGE_READONLY, &Protection);
 	ReadProcessMemory(hProcess, ModEntry.modBaseAddr, (CHAR*)Image, pNtHeader->OptionalHeader.SizeOfImage * sizeof(CHAR), &Red);
-	VirtualAllocEx(hProcess, ModEntry.modBaseAddr, pNtHeader->OptionalHeader.SizeOfImage, Protection, Protection);
+	VirtualProtectEx(hProcess, ModEntry.modBaseAddr, pNtHeader->OptionalHeader.SizeOfImage, Protection, &Protection);
 
 	DWORD Written = 0;
 
